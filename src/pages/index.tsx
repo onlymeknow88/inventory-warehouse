@@ -254,12 +254,12 @@ export default function Home() {
               </thead>
               <tbody>
                 {recentTenders.map((tender) => {
-                  const statusColors = {
+                  const statusColors: Record<string, string> = {
                     menang_tender: 'bg-green-100 text-green-800 border border-green-300',
                     kalah_tender: 'bg-red-100 text-red-800 border border-red-300',
                     pending: 'bg-yellow-100 text-yellow-800 border border-yellow-300',
                   };
-                  const statusText = {
+                  const statusText: Record<string, string> = {
                     menang_tender: 'MENANG',
                     kalah_tender: 'KALAH',
                     pending: 'PENDING',
