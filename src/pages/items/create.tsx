@@ -2,6 +2,7 @@ import Layout from '@/components/Layout';
 import { vendors } from '@/services/dummy';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 export default function CreateItemPage() {
   const router = useRouter();
@@ -316,9 +317,11 @@ export default function CreateItemPage() {
                   Preview Foto
                 </label>
                 <div className="flex justify-center">
-                  <img 
+                  <Image 
                     src={photoPreview || formData.photo_url || 'https://via.placeholder.com/300x300?text=Belum+Ada+Foto'} 
                     alt="Preview"
+                    width={256}
+                    height={256}
                     className="w-64 h-64 object-cover rounded-lg border-2 border-gray-300"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300x300?text=Error+Loading+Image';

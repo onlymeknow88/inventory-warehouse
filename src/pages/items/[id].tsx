@@ -2,6 +2,7 @@ import Layout from '@/components/Layout';
 import { getItemById, getVendorsByItem, itemVendors } from '@/services/dummy';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 export default function ItemDetail() {
   const router = useRouter();
@@ -63,9 +64,11 @@ export default function ItemDetail() {
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-xl font-bold text-gray-800 mb-4">Foto Barang</h2>
             <div className="flex justify-center">
-              <img 
+              <Image 
                 src={item.photo_url} 
                 alt={item.name}
+                width={600}
+                height={600}
                 className="w-full max-w-lg h-auto object-cover rounded-lg border-2 border-gray-300 shadow-md"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = 'https://via.placeholder.com/600x600?text=No+Image';

@@ -2,6 +2,7 @@ import Layout from '@/components/Layout';
 import { getInquiryById, getVendorById, getItemById, getUserById } from '@/services/dummy';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function InquiryDetailPage() {
   const router = useRouter();
@@ -130,9 +131,11 @@ export default function InquiryDetailPage() {
                 <div className="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-3">
                   <div className="flex gap-3">
                     <div className="flex-shrink-0">
-                      <img 
+                      <Image 
                         src={item.photo_url} 
                         alt={item.name}
+                        width={96}
+                        height={96}
                         className="w-24 h-24 object-cover rounded-lg border-2 border-gray-300"
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = 'https://via.placeholder.com/96?text=No+Image';

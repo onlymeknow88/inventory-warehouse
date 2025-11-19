@@ -1,6 +1,7 @@
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LineElement, LinearScale, PointElement, Title, Tooltip } from 'chart.js';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
 import { getDashboardStats, getMonthlyPurchaseTrend, getTopVendors, getVendorById, purchases, tenders } from '@/services/dummy';
+import Link from 'next/link';
 
 import Layout from '@/components/Layout';
 
@@ -233,9 +234,9 @@ export default function Home() {
               </tbody>
             </table>
           </div>
-          <a href="/purchases" className="inline-block mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+          <Link href="/purchases" className="inline-block mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
             Lihat Semua
-          </a>
+          </Link>
         </div>
 
         {/* Recent Tenders */}
@@ -279,9 +280,9 @@ export default function Home() {
               </tbody>
             </table>
           </div>
-          <a href="/tenders" className="inline-block mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+          <Link href="/tenders" className="inline-block mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
             Lihat Semua
-          </a>
+          </Link>
         </div>
       </div>
     </Layout>

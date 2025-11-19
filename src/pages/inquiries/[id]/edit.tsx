@@ -2,6 +2,7 @@ import Layout from '@/components/Layout';
 import { getInquiryById, vendors, items } from '@/services/dummy';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 export default function EditInquiryPage() {
   const router = useRouter();
@@ -153,9 +154,11 @@ export default function EditInquiryPage() {
               <div className="mt-4 bg-gray-50 border border-gray-200 rounded-lg p-4">
                 <div className="flex gap-4">
                   <div className="flex-shrink-0">
-                    <img 
+                    <Image 
                       src={selectedItem.photo_url} 
                       alt={selectedItem.name}
+                      width={128}
+                      height={128}
                       className="w-32 h-32 object-cover rounded-lg border-2 border-gray-300"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = 'https://via.placeholder.com/128?text=No+Image';

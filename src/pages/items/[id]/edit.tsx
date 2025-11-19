@@ -2,6 +2,7 @@ import Layout from '@/components/Layout';
 import { getItemById, vendors, getVendorsByItem } from '@/services/dummy';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 export default function EditItem() {
   const router = useRouter();
@@ -346,9 +347,11 @@ export default function EditItem() {
 
                 {/* Photo Preview */}
                 <div className="flex justify-center p-4 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-                  <img 
+                  <Image 
                     src={photoPreview || formData.photo_url || 'https://via.placeholder.com/300x300?text=Preview+Foto'}
-                    alt="Preview" 
+                    alt="Preview"
+                    width={256}
+                    height={256}
                     className="w-64 h-64 object-cover rounded-lg border-2 border-gray-300"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300x300?text=Foto+Tidak+Tersedia';
@@ -592,9 +595,11 @@ export default function EditItem() {
                 {photoPreview && (
                   <div>
                     <label className="text-xs text-gray-600 font-semibold">Preview Foto</label>
-                    <img 
+                    <Image 
                       src={photoPreview}
                       alt="Preview"
+                      width={300}
+                      height={128}
                       className="w-full h-32 object-cover rounded mt-1 border border-gray-300"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150?text=Error';
