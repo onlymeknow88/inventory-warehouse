@@ -1,9 +1,10 @@
-import Layout from '@/components/Layout';
+import { FORM_CODE_LABELS, FormCode } from '@/types';
 import { getPurchaseById, vendors } from '@/services/dummy';
-import { FormCode, FORM_CODE_LABELS } from '@/types';
+import { useEffect, useState } from 'react';
+
+import Layout from '@/components/Layout';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 
 interface PurchaseItem {
   id: string;

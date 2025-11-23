@@ -136,3 +136,23 @@ export interface PurchaseRecap {
   vendor_id: number;
   created_at: string;
 }
+
+export interface AccountsReceivable {
+  id: number;
+  request_date: string;
+  offer_letter_number: string;
+  delivery_date: string;
+  do_number: string;
+  delivery_proof_url?: string;
+  pending_days: number;
+  user_name: string;
+  po_number: string;
+  item_name: string;
+  qty: number;
+  unit: string;
+  price_unit: number;
+  price_total: number;
+  vendor_id: number;
+  status: 'pending' | 'paid' | 'overdue';
+  created_at: string;
+}

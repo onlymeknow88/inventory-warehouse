@@ -1,8 +1,9 @@
-import Layout from '@/components/Layout';
-import { getInquiryById, getVendorById, getItemById, getUserById } from '@/services/dummy';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+import { getInquiryById, getItemById, getUserById, getVendorById } from '@/services/dummy';
+
 import Image from 'next/image';
+import Layout from '@/components/Layout';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function InquiryDetailPage() {
   const router = useRouter();

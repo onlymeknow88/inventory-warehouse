@@ -1,5 +1,6 @@
+import { getDashboardStats, tenders } from '@/services/dummy';
+
 import Layout from '@/components/Layout';
-import { tenders, getDashboardStats } from '@/services/dummy';
 import Link from 'next/link';
 import { useState } from 'react';
 

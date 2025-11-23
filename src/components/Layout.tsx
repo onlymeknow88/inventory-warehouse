@@ -1,6 +1,7 @@
+import { ReactNode, useState } from 'react';
+
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { ReactNode, useState } from 'react';
 
 interface LayoutProps {
   children: ReactNode;
@@ -25,6 +26,7 @@ export default function Layout({ children }: LayoutProps) {
     { href: '/purchases', label: 'Form Pembelian', icon: '🛒' },
     { href: '/vendors', label: 'Vendor', icon: '🏢' },
     { href: '/reports/purchase-recap', label: 'Rekap Purchasing', icon: '📄' },
+    { href: '/reports/accounts-receivable', label: 'Rekap Piutang', icon: '💰' },
   ];
 
   const masterDataMenu = [
@@ -188,6 +190,7 @@ export default function Layout({ children }: LayoutProps) {
              router.pathname.includes('/vendors') ? 'Vendor' :
              router.pathname.includes('/items') ? 'Barang' :
              router.pathname.includes('/reports/purchase-recap') ? 'Rekap Purchasing' :
+             router.pathname.includes('/reports/accounts-receivable') ? 'Rekap Piutang' :
              router.pathname.includes('/reports/yearly-recap') ? 'Rekap Tahunan' : 'P-Warehouse'}
           </h1>
           <div className="flex items-center gap-4">

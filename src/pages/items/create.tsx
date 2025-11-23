@@ -1,8 +1,8 @@
-import Layout from '@/components/Layout';
-import { vendors } from '@/services/dummy';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
+import Layout from '@/components/Layout';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { vendors } from '@/services/dummy';
 
 export default function CreateItemPage() {
   const router = useRouter();

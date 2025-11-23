@@ -1,8 +1,9 @@
-import Layout from '@/components/Layout';
 import { getItemById, getVendorsByItem, itemVendors } from '@/services/dummy';
+
+import Image from 'next/image';
+import Layout from '@/components/Layout';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 
 export default function ItemDetail() {
   const router = useRouter();

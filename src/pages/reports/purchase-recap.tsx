@@ -1,8 +1,9 @@
-import Layout from '@/components/Layout';
-import { purchases, getVendorById } from '@/services/dummy';
 import { FORM_CODE_LABELS, FormCode } from '@/types';
-import { useState } from 'react';
+import { getVendorById, purchases } from '@/services/dummy';
+
+import Layout from '@/components/Layout';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function PurchaseRecapPage() {
   const [selectedYear, setSelectedYear] = useState('2025');
@@ -196,7 +197,7 @@ export default function PurchaseRecapPage() {
       </div>
 
       {/* Info Section */}
-      <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+      {/* <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
         <div className="flex">
           <div className="flex-shrink-0">
             <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
@@ -210,7 +211,7 @@ export default function PurchaseRecapPage() {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Table */}
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">

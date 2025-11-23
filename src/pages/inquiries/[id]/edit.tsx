@@ -1,6 +1,7 @@
+import { getInquiryById, items, vendors } from '@/services/dummy';
+import { useEffect, useState } from 'react';
+
 import Layout from '@/components/Layout';
-import { getInquiryById, vendors, items } from '@/services/dummy';
-import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 interface InquiryItem {

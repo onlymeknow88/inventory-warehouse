@@ -1,7 +1,8 @@
-import Layout from '@/components/Layout';
 import { getTenderById, getUserById } from '@/services/dummy';
-import { useRouter } from 'next/router';
+
+import Layout from '@/components/Layout';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function TenderDetailPage() {
   const router = useRouter();
