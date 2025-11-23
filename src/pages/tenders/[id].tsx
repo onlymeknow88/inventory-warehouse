@@ -81,6 +81,72 @@ export default function TenderDetailPage() {
         </div>
       </div>
 
+      {/* Action Flow Card */}
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200 rounded-lg shadow-lg p-6 mb-6">
+        <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+          <svg className="w-6 h-6 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clipRule="evenodd" />
+          </svg>
+          Langkah Selanjutnya
+        </h3>
+        <div className="flex flex-wrap gap-3">
+          {tender.is_urgent ? (
+            <Link
+              href={`/purchases/create?tenderId=${tender.id}`}
+              className="flex-1 min-w-[250px] px-6 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg hover:from-orange-600 hover:to-orange-700 font-bold shadow-md flex items-center justify-center gap-2 transition-all"
+            >
+              <span className="text-2xl">🔥</span>
+              <div>
+                <div className="text-sm opacity-90">URGENT</div>
+                <div>Langsung ke Form Pembelian</div>
+              </div>
+            </Link>
+          ) : tender.status_tender === 'menang_tender' ? (
+            <Link
+              href={`/purchases/create?tenderId=${tender.id}`}
+              className="flex-1 min-w-[250px] px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-green-600 hover:to-green-700 font-bold shadow-md flex items-center justify-center gap-2 transition-all"
+            >
+              <span className="text-2xl">✓</span>
+              <div>
+                <div className="text-sm opacity-90">MENANG TENDER</div>
+                <div>Lanjut ke Form Pembelian</div>
+              </div>
+            </Link>
+          ) : tender.status_tender === 'kalah_tender' ? (
+            <Link
+              href={`/reports/purchase-recap?tenderId=${tender.id}`}
+              className="flex-1 min-w-[250px] px-6 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-lg hover:from-yellow-600 hover:to-yellow-700 font-bold shadow-md flex items-center justify-center gap-2 transition-all"
+            >
+              <span className="text-2xl">📄</span>
+              <div>
+                <div className="text-sm opacity-90">KALAH TENDER</div>
+                <div>Input ke Rekap Purchasing</div>
+              </div>
+            </Link>
+          ) : (
+            <Link
+              href={`/inquiries/create?tenderId=${tender.id}`}
+              className="flex-1 min-w-[250px] px-6 py-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg hover:from-purple-600 hover:to-purple-700 font-bold shadow-md flex items-center justify-center gap-2 transition-all"
+            >
+              <span className="text-2xl">📋</span>
+              <div>
+                <div className="text-sm opacity-90">PENDING</div>
+                <div>Lanjut ke Form Barang/Jasa</div>
+              </div>
+            </Link>
+          )}
+        </div>
+        <p className="text-sm text-gray-600 mt-4">
+          {tender.is_urgent 
+            ? '⚡ Tender urgent akan langsung diproses ke Form Pembelian'
+            : tender.status_tender === 'menang_tender'
+            ? '🎉 Selamat! Tender dimenangkan, lanjutkan ke pembelian'
+            : tender.status_tender === 'kalah_tender'
+            ? '📊 Tender tidak dimenangkan, silakan input ke rekap untuk dokumentasi'
+            : '📝 Tender masih pending, mulai dengan inquiry barang/jasa'}
+        </p>
+      </div>
+
       {/* Main Info Card */}
       <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
         <div className="flex justify-between items-start mb-6">

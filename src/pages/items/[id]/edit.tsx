@@ -347,16 +347,22 @@ export default function EditItem() {
 
                 {/* Photo Preview */}
                 <div className="flex justify-center p-4 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-                  <Image 
-                    src={photoPreview || formData.photo_url || 'https://via.placeholder.com/300x300?text=Preview+Foto'}
-                    alt="Preview"
-                    width={256}
-                    height={256}
-                    className="w-64 h-64 object-cover rounded-lg border-2 border-gray-300"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300x300?text=Foto+Tidak+Tersedia';
-                    }}
-                  />
+                  {(photoPreview || (formData.photo_url && formData.photo_url !== '#')) ? (
+                    <Image 
+                      src={photoPreview || formData.photo_url || 'https://via.placeholder.com/300x300?text=Preview+Foto'}
+                      alt="Preview"
+                      width={256}
+                      height={256}
+                      className="w-64 h-64 object-cover rounded-lg border-2 border-gray-300"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300x300?text=Foto+Tidak+Tersedia';
+                      }}
+                    />
+                  ) : (
+                    <div className="w-64 h-64 bg-gray-200 border-2 border-gray-300 rounded-lg flex items-center justify-center">
+                      <span className="text-gray-500 text-4xl">📷</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

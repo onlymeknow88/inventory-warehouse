@@ -7,6 +7,7 @@ export default function TendersIndex() {
   const stats = getDashboardStats();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
+  const [filterUrgent, setFilterUrgent] = useState('all');
 
   const filteredTenders = tenders.filter(tender => {
     const matchSearch = 
@@ -15,9 +16,14 @@ export default function TendersIndex() {
       tender.letter_number.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchStatus = filterStatus === 'all' || tender.status_tender === filterStatus;
+    const matchUrgent = filterUrgent === 'all' ||
+      (filterUrgent === 'urgent' && tender.is_urgent) ||
+      (filterUrgent === 'normal' && !tender.is_urgent);
 
-    return matchSearch && matchStatus;
+    return matchSearch && matchStatus && matchUrgent;
   });
+
+  const urgentTenders = tenders.filter(t => t.is_urgent);
 
   const formatRupiah = (value: number) => {
     return new Intl.NumberFormat('id-ID', {
@@ -73,7 +79,7 @@ export default function TendersIndex() {
 
       {/* Search & Filter */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <input
             type="text"
             placeholder="Cari judul pekerjaan, perusahaan, atau no. surat..."
@@ -91,9 +97,23 @@ export default function TendersIndex() {
             <option value="kalah_tender">Kalah Tender</option>
             <option value="pending">Pending</option>
           </select>
+          <select
+            value={filterUrgent}
+            onChange={(e) => setFilterUrgent(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white"
+          >
+            <option value="all">Semua</option>
+            <option value="urgent">🔥 Urgent Saja</option>
+            <option value="normal">Normal Saja</option>
+          </select>
         </div>
         <p className="text-sm text-gray-600 mt-3">
           Menampilkan {filteredTenders.length} dari {tenders.length} tender
+          {urgentTenders.length > 0 && (
+            <span className="ml-2 text-orange-600 font-semibold">
+              ({urgentTenders.length} Urgent)
+            </span>
+          )}
         </p>
       </div>
 
@@ -153,7 +173,14 @@ export default function TendersIndex() {
                       <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{index + 1}</td>
                       <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{formatDate(tender.tender_date)}</td>
                       <td className="px-4 py-4 whitespace-nowrap text-sm font-bold text-gray-900">{tender.letter_number}</td>
-                      <td className="px-4 py-4 text-sm text-gray-900">{tender.job_title}</td>
+                      <td className="px-4 py-4 text-sm text-gray-900">
+                        <div className="flex items-center gap-2">
+                          {tender.is_urgent && (
+                            <span className="text-orange-500 text-lg" title="Urgent">🔥</span>
+                          )}
+                          <span>{tender.job_title}</span>
+                        </div>
+                      </td>
                       <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{tender.company_name}</td>
                       <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-semibold text-gray-900">{formatRupiah(tender.nominal_modal)}</td>
                       <td className="px-4 py-4 whitespace-nowrap text-center">
@@ -165,7 +192,7 @@ export default function TendersIndex() {
                         {tender.nominal_pemenang > 0 ? formatRupiah(tender.nominal_pemenang) : '-'}
                       </td>
                       <td className="px-4 py-4 whitespace-nowrap text-center">
-                        <div className="flex justify-center gap-1">
+                        <div className="flex justify-center gap-1 flex-wrap">
                           <Link 
                             href={`/tenders/${tender.id}`} 
                             className="px-2 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700"
@@ -178,6 +205,40 @@ export default function TendersIndex() {
                           >
                             Edit
                           </Link>
+                          {/* Routing Logic */}
+                          {tender.is_urgent ? (
+                            <Link
+                              href={`/purchases/create?tenderId=${tender.id}`}
+                              className="px-2 py-1 bg-orange-600 text-white text-xs rounded hover:bg-orange-700"
+                              title="Urgent - Langsung ke Form Pembelian"
+                            >
+                              🔥 Beli
+                            </Link>
+                          ) : tender.status_tender === 'menang_tender' ? (
+                            <Link
+                              href={`/purchases/create?tenderId=${tender.id}`}
+                              className="px-2 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700"
+                              title="Menang - Lanjut ke Form Pembelian"
+                            >
+                              ✓ Beli
+                            </Link>
+                          ) : tender.status_tender === 'kalah_tender' ? (
+                            <Link
+                              href={`/reports/purchase-recap?tenderId=${tender.id}`}
+                              className="px-2 py-1 bg-yellow-600 text-white text-xs rounded hover:bg-yellow-700"
+                              title="Kalah - Input ke Rekap"
+                            >
+                              📄 Rekap
+                            </Link>
+                          ) : (
+                            <Link
+                              href={`/inquiries/create?tenderId=${tender.id}`}
+                              className="px-2 py-1 bg-purple-600 text-white text-xs rounded hover:bg-purple-700"
+                              title="Pending - Lanjut ke Form Barang/Jasa"
+                            >
+                              📋 Inquiry
+                            </Link>
+                          )}
                           <button 
                             onClick={() => confirm('Yakin ingin menghapus?') && alert('Hapus: ' + tender.job_title)} 
                             className="px-2 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700"

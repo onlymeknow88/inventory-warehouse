@@ -317,16 +317,22 @@ export default function CreateItemPage() {
                   Preview Foto
                 </label>
                 <div className="flex justify-center">
-                  <Image 
-                    src={photoPreview || formData.photo_url || 'https://via.placeholder.com/300x300?text=Belum+Ada+Foto'} 
-                    alt="Preview"
-                    width={256}
-                    height={256}
-                    className="w-64 h-64 object-cover rounded-lg border-2 border-gray-300"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300x300?text=Error+Loading+Image';
-                    }}
-                  />
+                  {(photoPreview || (formData.photo_url && formData.photo_url !== '#')) ? (
+                    <Image 
+                      src={photoPreview || formData.photo_url || 'https://via.placeholder.com/300x300?text=Belum+Ada+Foto'} 
+                      alt="Preview"
+                      width={256}
+                      height={256}
+                      className="w-64 h-64 object-cover rounded-lg border-2 border-gray-300"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300x300?text=Error+Loading+Image';
+                      }}
+                    />
+                  ) : (
+                    <div className="w-64 h-64 bg-gray-200 border-2 border-gray-300 rounded-lg flex items-center justify-center">
+                      <span className="text-gray-500 text-4xl">📷</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

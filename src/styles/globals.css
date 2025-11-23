@@ -31,3 +31,19 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Force input text visibility */
+input[type="number"],
+input[type="text"],
+textarea,
+select {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+input[type="number"]::placeholder,
+input[type="text"]::placeholder,
+textarea::placeholder {
+  color: #9ca3af !important;
+  -webkit-text-fill-color: #9ca3af !important;
+}

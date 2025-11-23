@@ -131,16 +131,22 @@ export default function InquiryDetailPage() {
                 <div className="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-3">
                   <div className="flex gap-3">
                     <div className="flex-shrink-0">
-                      <Image 
-                        src={item.photo_url} 
-                        alt={item.name}
-                        width={96}
-                        height={96}
-                        className="w-24 h-24 object-cover rounded-lg border-2 border-gray-300"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = 'https://via.placeholder.com/96?text=No+Image';
-                        }}
-                      />
+                      {item.photo_url && item.photo_url !== '#' ? (
+                        <Image 
+                          src={item.photo_url} 
+                          alt={item.name}
+                          width={96}
+                          height={96}
+                          className="w-24 h-24 object-cover rounded-lg border-2 border-gray-300"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/96?text=No+Image';
+                          }}
+                        />
+                      ) : (
+                        <div className="w-24 h-24 bg-gray-200 border-2 border-gray-300 rounded-lg flex items-center justify-center">
+                          <span className="text-gray-500">📷</span>
+                        </div>
+                      )}
                     </div>
                     <div className="flex-1">
                       <p className="text-xs text-gray-600 mb-1">{item.description}</p>
@@ -194,20 +200,99 @@ export default function InquiryDetailPage() {
               <div className="mt-1 text-lg text-gray-900">{user?.name}</div>
             </div>
 
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-bold text-gray-600">Qty</span>
-                <span className="text-lg font-bold text-gray-900">{inquiry.qty} {inquiry.unit}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-bold text-gray-600">Harga Satuan</span>
-                <span className="text-lg font-semibold text-gray-900">{formatRupiah(inquiry.price_unit)}</span>
-              </div>
-              <div className="border-t border-gray-300 pt-3 flex justify-between items-center">
-                <span className="text-base font-bold text-gray-700">Total Harga</span>
-                <span className="text-2xl font-bold text-blue-600">{formatRupiah(inquiry.price_total)}</span>
-              </div>
+            <div>
+              <label className="text-sm font-bold text-gray-600">Tanggal Inquiry</label>
+              <div className="mt-1 text-lg text-gray-900">{formatDate(inquiry.inquiry_date)}</div>
             </div>
+          </div>
+        </div>
+
+        {/* Items Table - Support Multiple Items */}
+        <div className="mb-6">
+          <label className="text-sm font-bold text-gray-600 mb-3 block">Detail Item Inquiry</label>
+          <div className="bg-gray-50 border border-gray-200 rounded-lg overflow-hidden">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase">No</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase">Nama Barang</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase">Link</th>
+                  <th className="px-4 py-3 text-center text-xs font-bold text-gray-700 uppercase">Qty</th>
+                  <th className="px-4 py-3 text-center text-xs font-bold text-gray-700 uppercase">Satuan</th>
+                  <th className="px-4 py-3 text-right text-xs font-bold text-gray-700 uppercase">Harga Satuan</th>
+                  <th className="px-4 py-3 text-right text-xs font-bold text-gray-700 uppercase">Total</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase">Garansi</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase">Dokumen</th>
+                  <th className="px-4 py-3 text-center text-xs font-bold text-gray-700 uppercase">Foto</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {inquiry.items && inquiry.items.length > 0 ? (
+                  inquiry.items.map((item: any, index: number) => (
+                    <tr key={item.id} className="hover:bg-gray-50">
+                      <td className="px-4 py-3 text-sm text-gray-900">{index + 1}</td>
+                      <td className="px-4 py-3 text-sm text-gray-900">{item.vendor_item_name}</td>
+                      <td className="px-4 py-3 text-sm">
+                        {item.link_url ? (
+                          <a href={item.link_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                            Link
+                          </a>
+                        ) : '-'}
+                      </td>
+                      <td className="px-4 py-3 text-center text-sm text-gray-900">{item.qty}</td>
+                      <td className="px-4 py-3 text-center text-sm text-gray-900">{item.unit}</td>
+                      <td className="px-4 py-3 text-right text-sm text-gray-900">{formatRupiah(item.price_unit)}</td>
+                      <td className="px-4 py-3 text-right text-sm font-semibold text-gray-900">{formatRupiah(item.price_total)}</td>
+                      <td className="px-4 py-3 text-sm text-gray-900">{item.warranty || '-'}</td>
+                      <td className="px-4 py-3 text-sm text-gray-900">{item.documents || '-'}</td>
+                      <td className="px-4 py-3 text-center">
+                        {item.photo_url && item.photo_url !== '#' ? (
+                          <div className="flex justify-center">
+                            <div className="w-20 h-20 bg-gray-200 border border-gray-300 rounded flex items-center justify-center">
+                              <span className="text-gray-500 text-xs">📷</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <span className="text-gray-400 text-xs">No Photo</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td className="px-4 py-3 text-sm text-gray-900">1</td>
+                    <td className="px-4 py-3 text-sm text-gray-900">{inquiry.vendor_item_name}</td>
+                    <td className="px-4 py-3 text-sm">
+                      {inquiry.link_url ? (
+                        <a href={inquiry.link_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                          Link
+                        </a>
+                      ) : '-'}
+                    </td>
+                    <td className="px-4 py-3 text-center text-sm text-gray-900">{inquiry.qty}</td>
+                    <td className="px-4 py-3 text-center text-sm text-gray-900">{inquiry.unit}</td>
+                    <td className="px-4 py-3 text-right text-sm text-gray-900">{formatRupiah(inquiry.price_unit)}</td>
+                    <td className="px-4 py-3 text-right text-sm font-semibold text-gray-900">{formatRupiah(inquiry.price_total)}</td>
+                    <td className="px-4 py-3 text-sm text-gray-900">-</td>
+                    <td className="px-4 py-3 text-sm text-gray-900">-</td>
+                    <td className="px-4 py-3 text-center">
+                      <span className="text-gray-400 text-xs">No Photo</span>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+              <tfoot className="bg-blue-50">
+                <tr>
+                  <td colSpan={9} className="px-4 py-3 text-right text-sm font-bold text-blue-900">GRAND TOTAL:</td>
+                  <td className="px-4 py-3 text-right text-lg font-bold text-blue-900">
+                    {inquiry.items && inquiry.items.length > 0 
+                      ? formatRupiah(inquiry.items.reduce((sum: number, item: any) => sum + item.price_total, 0))
+                      : formatRupiah(inquiry.price_total)
+                    }
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
           </div>
         </div>
 

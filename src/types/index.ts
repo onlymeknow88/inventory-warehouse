@@ -4,6 +4,14 @@ export interface User {
   email: string;
 }
 
+export type FormCode = 'U' | 'J' | 'P';
+
+export const FORM_CODE_LABELS: Record<FormCode, string> = {
+  U: 'Urgent',
+  J: 'Jasa',
+  P: 'PO'
+};
+
 export interface Vendor {
   id: number;
   name: string;
@@ -49,7 +57,11 @@ export interface Purchase {
   delivery_deadline: string;
   expedition: string;
   status: 'pending' | 'approved' | 'rejected' | 'completed';
+  is_urgent: boolean;
+  has_po: boolean;
+  form_code?: FormCode;
   created_at: string;
+  updated_at?: string;
 }
 
 export interface Inquiry {
@@ -70,6 +82,23 @@ export interface Inquiry {
   reply_message?: string;
   status: 'sent' | 'replied' | 'closed';
   created_at: string;
+  items?: InquiryItem[];
+  deadline?: string;
+  expedition?: string;
+}
+
+export interface InquiryItem {
+  id: string;
+  item_id: number;
+  vendor_item_name: string;
+  link_url?: string;
+  qty: number;
+  unit: string;
+  price_unit: number;
+  price_total: number;
+  warranty?: string;
+  documents?: string;
+  photo_url?: string;
 }
 
 export interface Tender {
@@ -87,5 +116,23 @@ export interface Tender {
   status_tender: 'menang_tender' | 'kalah_tender' | 'pending';
   nominal_pemenang: number;
   notes: string;
+  is_urgent: boolean;
+  has_form_items: boolean;
+  has_offer_doc: boolean;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface PurchaseRecap {
+  id: number;
+  purchase_id?: number;
+  job_detail: string;
+  qty: number;
+  unit: string;
+  price_total: number;
+  is_urgent: boolean;
+  has_po: boolean;
+  form_code?: FormCode;
+  vendor_id: number;
   created_at: string;
 }

@@ -1,4 +1,5 @@
 import Layout from '@/components/Layout';
+import WorkflowStatus from '@/components/WorkflowStatus';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
@@ -17,7 +18,18 @@ export default function CreateTenderPage() {
     status_tender: 'pending',
     nominal_pemenang: 0,
     notes: '',
+    is_urgent: false,
+    has_form_items: false,
+    has_offer_doc: false,
   });
+
+  const workflowSteps = [
+    { id: 1, label: 'Info Tender', completed: true, active: true },
+    { id: 2, label: 'Form Barang/Jasa', completed: formData.has_form_items, active: false },
+    { id: 3, label: 'Surat Penawaran', completed: formData.has_offer_doc, active: false },
+    { id: 4, label: 'Status Tender', completed: formData.status_tender !== 'pending', active: false },
+    { id: 5, label: 'Form Pembelian', completed: false, active: false },
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,8 +75,36 @@ export default function CreateTenderPage() {
         <p className="text-gray-600 mt-1">Buat tender baru untuk lelang proyek</p>
       </div>
 
+      {/* Workflow Progress */}
+      <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+        <h3 className="text-lg font-bold text-gray-900 mb-4">Alur Proses Tender</h3>
+        <WorkflowStatus steps={workflowSteps} variant="horizontal" />
+      </div>
+
       <div className="bg-white rounded-lg shadow-lg p-8 max-w-4xl">
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Urgent Flag */}
+          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="is_urgent"
+                name="is_urgent"
+                checked={formData.is_urgent}
+                onChange={(e) => setFormData(prev => ({ ...prev, is_urgent: e.target.checked }))}
+                className="w-5 h-5 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500"
+              />
+              <label htmlFor="is_urgent" className="ml-3 text-sm font-bold text-yellow-800">
+                URGENT - Pembelian ini bersifat mendesak
+              </label>
+            </div>
+            {formData.is_urgent && (
+              <p className="mt-2 text-xs text-yellow-700">
+                Tender urgent akan langsung diproses ke Form Pembelian tanpa melalui Form Barang/Jasa
+              </p>
+            )}
+          </div>
+
           {/* Basic Information */}
           <div className="border-b border-gray-200 pb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Informasi Dasar</h3>

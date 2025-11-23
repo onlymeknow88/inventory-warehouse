@@ -64,16 +64,22 @@ export default function ItemDetail() {
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-xl font-bold text-gray-800 mb-4">Foto Barang</h2>
             <div className="flex justify-center">
-              <Image 
-                src={item.photo_url} 
-                alt={item.name}
-                width={600}
-                height={600}
-                className="w-full max-w-lg h-auto object-cover rounded-lg border-2 border-gray-300 shadow-md"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = 'https://via.placeholder.com/600x600?text=No+Image';
-                }}
-              />
+              {item.photo_url && item.photo_url !== '#' ? (
+                <Image 
+                  src={item.photo_url} 
+                  alt={item.name}
+                  width={600}
+                  height={600}
+                  className="w-full max-w-lg h-auto object-cover rounded-lg border-2 border-gray-300 shadow-md"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'https://via.placeholder.com/600x600?text=No+Image';
+                  }}
+                />
+              ) : (
+                <div className="w-full max-w-lg h-96 bg-gray-200 border-2 border-gray-300 rounded-lg flex items-center justify-center">
+                  <span className="text-gray-500 text-4xl">📷</span>
+                </div>
+              )}
             </div>
           </div>
 
