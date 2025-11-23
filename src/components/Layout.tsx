@@ -24,7 +24,10 @@ export default function Layout({ children }: LayoutProps) {
     { href: '/tenders', label: 'Info Tender', icon: '🏆' },
     { href: '/inquiries', label: 'Form Barang/Jasa', icon: '📋' },
     { href: '/purchases', label: 'Form Pembelian', icon: '🛒' },
+    { href: '/kpg-purchases', label: 'KPG (Kontrak Payung Gas)', icon: '⛽' },
+    { href: '/kpc-purchases', label: 'KPC (Kontrak Payung Consumable)', icon: '📦' },
     { href: '/vendors', label: 'Vendor', icon: '🏢' },
+    { href: '/reports/invoice-tabung', label: 'Invoice Vendor Tabung', icon: '🧾' },
     { href: '/reports/purchase-recap', label: 'Rekap Purchasing', icon: '📄' },
     { href: '/reports/accounts-receivable', label: 'Rekap Piutang', icon: '💰' },
   ];
@@ -186,9 +189,12 @@ export default function Layout({ children }: LayoutProps) {
             {router.pathname === '/' ? 'Dashboard' : 
              router.pathname.includes('/tenders') ? 'Info Tender' :
              router.pathname.includes('/inquiries') ? 'Form Barang/Jasa' :
+             router.pathname.includes('/kpg-purchases') ? 'KPG (Kontrak Payung Gas)' :
+             router.pathname.includes('/kpc-purchases') ? 'KPC (Kontrak Payung Consumable)' :
              router.pathname.includes('/purchases') ? 'Form Pembelian' :
              router.pathname.includes('/vendors') ? 'Vendor' :
              router.pathname.includes('/items') ? 'Barang' :
+             router.pathname.includes('/reports/invoice-tabung') ? 'Invoice Vendor Tabung' :
              router.pathname.includes('/reports/purchase-recap') ? 'Rekap Purchasing' :
              router.pathname.includes('/reports/accounts-receivable') ? 'Rekap Piutang' :
              router.pathname.includes('/reports/yearly-recap') ? 'Rekap Tahunan' : 'P-Warehouse'}

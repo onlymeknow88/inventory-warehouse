@@ -156,3 +156,125 @@ export interface AccountsReceivable {
   status: 'pending' | 'paid' | 'overdue';
   created_at: string;
 }
+
+export interface KPGPurchase {
+  id: number;
+  nama_tabung: string;
+  stock_code: string;
+  vendor: string;
+  qty_po: number;
+  harga_jual: number;
+  harga_beli_lama: number;
+  harga_beli_baru: number;
+  qty: number;
+  harga_beli: number;
+  total_harga_beli: number;
+  harga_jual_item: number;
+  total_harga_jual: number;
+  status: string;
+  periode_awal: string; // format: 'MM-YYYY'
+  periode_akhir: string; // format: 'MM-YYYY'
+  tahun: string;
+  // Counting untuk setiap jenis gas
+  argon_p10?: number;
+  oxy_hp?: number;
+  nitrogen?: number;
+  helium?: number;
+  ca?: number;
+  gas_mix?: number;
+  gas_mix_2?: number;
+  acy?: number;
+  oxy?: number;
+  argon?: number;
+  argon_2?: number;
+  acy_hp?: number;
+  co2_46?: number;
+  hydrot?: number;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface KPCPurchase {
+  id: number;
+  nama_barang: string;
+  stock_code: string;
+  vendor: string;
+  qty_po: number;
+  harga_jual: number;
+  harga_beli_lama: number;
+  harga_beli_baru: number;
+  qty: number;
+  harga_beli: number;
+  total_harga_beli: number;
+  harga_jual_item: number;
+  total_harga_jual: number;
+  status: string;
+  periode_awal: string; // format: 'MM-YYYY'
+  periode_akhir: string; // format: 'MM-YYYY'
+  tahun: string;
+  satuan: string;
+  kategori: string;
+  // Counting untuk tabung gas (KPC juga untuk tabung)
+  argon_p10?: number;
+  oxy_hp?: number;
+  nitrogen?: number;
+  helium?: number;
+  ca?: number;
+  gas_mix?: number;
+  gas_mix_2?: number;
+  acy?: number;
+  oxy?: number;
+  argon?: number;
+  argon_2?: number;
+  acy_hp?: number;
+  co2_46?: number;
+  hydrot?: number;
+  // Counting untuk barang consumable
+  majun?: number;
+  kuas?: number;
+  sarung_tangan?: number;
+  masker?: number;
+  kabel_ties?: number;
+  isolasi?: number;
+  baut?: number;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface InvoiceTabung {
+  id: number;
+  tanggal: string;
+  no_inv: string;
+  nama_vendor: string;
+  no_do_vendor: string;
+  no_po_kck: string;
+  no_po_pltu: string;
+  // Gas quantities
+  argon_p10?: number;
+  oxy_hp?: number;
+  nitrogen?: number;
+  helium?: number;
+  ca?: number;
+  gas_mix?: number;
+  gas_mix_2?: number;
+  acy?: number;
+  oxy?: number;
+  argon?: number;
+  argon_2?: number;
+  acy_hp?: number;
+  co2_46?: number;
+  hydrot?: number;
+  // Consumable quantities
+  majun?: number;
+  kuas?: number;
+  sarung_tangan?: number;
+  masker?: number;
+  kabel_ties?: number;
+  isolasi?: number;
+  baut?: number;
+  nominal?: number;
+  kategori: 'KPG' | 'KPC' | 'MIXED';
+  status_pembayaran: 'pending' | 'paid' | 'partial';
+  keterangan?: string;
+  created_at: string;
+}
