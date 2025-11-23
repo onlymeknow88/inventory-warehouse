@@ -26,14 +26,14 @@ export default function Layout({ children }: LayoutProps) {
     { href: '/purchases', label: 'Form Pembelian', icon: '🛒' },
     { href: '/kpg-purchases', label: 'KPG (Kontrak Payung Gas)', icon: '⛽' },
     { href: '/kpc-purchases', label: 'KPC (Kontrak Payung Consumable)', icon: '📦' },
-    { href: '/vendors', label: 'Vendor', icon: '🏢' },
     { href: '/reports/invoice-tabung', label: 'Invoice Vendor Tabung', icon: '🧾' },
     { href: '/reports/purchase-recap', label: 'Rekap Purchasing', icon: '📄' },
     { href: '/reports/accounts-receivable', label: 'Rekap Piutang', icon: '💰' },
   ];
-
+  
   const masterDataMenu = [
     { href: '/items', label: 'Barang', icon: '📦' },
+    { href: '/vendors', label: 'Vendor', icon: '🏢' },
   ];
 
   const isActivePath = (path: string) => {
